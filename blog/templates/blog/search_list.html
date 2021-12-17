@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}نتیجه جستجو: {{ search }}{% endblock title %}
+
+{% block content %} 
+
+<section class="text-center">
+    <h4 class="alert alert-info" style="margin-top: 10px;">جستجو: {{ search }}</h4>
+        <div class="row">
+            {% for element in result %}
+                <div class="col-lg-4">
+                    <img src="{{ element.image.url }}" class="thumbnail" />
+                    <div class="card-body">
+                    <h2 class="card-title">{{ element.title }}</h2>
+                    <p class="card-text">
+                        {{ element.content|truncatewords:30|safe }}
+                    </p>
+                    <a href="{% url 'blog:articles_detail' element.slug %}" class="btn btn-primary">ادامه</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+</section>
+
+
+<!--Pagination-->
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+    {% if result.has_previous %}
+        <li class="page-item">
+        <a class="page-link" href="?page={{ result.previous_page_number }}&q={{ query }}">قبلی</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">قبلی</a>
+      </li>
+    {% endif %}
+
+    {% if result.has_next %}
+        <li class="page-item">
+        <a class="page-link" href="?page={{ result.next_page_number }}&q={{ query }}">بعدی</a>
+      </li>
+    {% else %}
+        <li class="page-item disabled">
+        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">بعدی</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+<!--end of Pagination-->
+
+
+{% endblock content %}

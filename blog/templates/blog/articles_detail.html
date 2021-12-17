@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load comment_tags %}
+{% load ratings %}
+
+{% block title %} {{ article.title }} {% endblock title %}
+
+{% block content %}
+<div>
+    <h1 class="text-right">{{ article.title }}</h1>
+    <p class="text-left">{{ article.timestamp }}</p>
+</div>
+<hr>
+<img src="{{ article.image.url }}" width="150px" height="150px" class="mx-auto d-block" style="margin-top: 15px;">
+<!-- <h1 class="text-center">{{ article.title }}</h1> -->
+<p>{{ article.content|safe }}</p>
+<div>
+    <h5>نویسنده: <p>{{ article.author }}</p></h5>
+    <h5>دسته بندی ها:</h5>
+    {% for tag in article.tag.all %}
+        <a href="{% url 'blog:tag_view' tag.slug %}"><button class="btn btn-info">{{ tag.title }}</button></a>
+    {% endfor %}
+</div>
+<hr>
+<div class="text-center">{% ratings article %}</div>
+{% render_comments article request %}
+{% include_bootstrap %}
+
+{% endblock content %}
+    

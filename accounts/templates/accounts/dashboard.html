@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} حساب کاربری {% endblock title %}
+
+{% block content %}
+
+<h2 class="text-center alert alert-info" style="margin: 10px 0 10px 0;">{{ request.user.username }}</h2>
+<div class="row">
+	<div class="col-md-3">
+		<div class="card card-body">
+			<a class="btn btn-warning" href="{% url 'blog:articles_list' %}">بازگشت</a>
+			<hr>
+			<h3 style="text-align: center">تنظیمات کاربری</h3>
+			<hr>
+			{% if request.user.profile.image %}
+			<img class="profile-pic" src="{{ request.user.profile.image.url }}">
+			{% else %}
+			<img class="profile-pic" src="{% static 'img/profile2.png' %}">
+			{% endif %}
+		
+		</div>
+	</div>
+	<div class="col-md-9">
+		<div class="card card-body">
+			
+			<form method="POST" action="" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+		
+				<button type="submit" class="btn btn-info">ثبت</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<a style="text-decoration: none;" href="{% url 'blog:add_article' %}">
+	<button type="button" style="margin: 10px 0 10px 0;" class="btn btn-secondary btn-lg btn-block">ایجاد مقاله</button>
+</a>
+
+<section class="text-center">
+	<h4 class="alert alert-info" style="margin: 10px 0 10px 0;">مقاله ها</h4>
+	<div class="row">
+	  {% for article in articles %}
+	  <div class="col-lg-4">
+		  <img src="{{ article.image.url }}" class="thumbnail" />
+		  <div class="card-body">
+			<h2 class="card-title">{{ article.title }}</h2>
+			<p class="card-text">
+			  {{ article.content|truncatewords:30|safe }}
+			</p>
+			<a href="{% url 'blog:articles_detail' article.slug %}" class="btn btn-primary">ادامه</a>
+			<a href="{% url 'blog:edit_article' article.slug %}" class="btn btn-Secondary">بروزرسانی مقاله</a>
+			<a href="{% url 'blog:delete_article' article.slug %}" class="btn btn-danger">حذف</a>
+		  </div>
+		</div>
+		{% endfor %}
+	  </div>
+  </section>
+
+
+{% endblock content %}

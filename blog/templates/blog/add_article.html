@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}اضافه کردن مقاله{% endblock title %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" style="margin-top: 10px;">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-info">ثبت</button>
+</form>
+{% endblock content %}

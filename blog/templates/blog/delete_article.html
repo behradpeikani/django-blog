@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} حذف مقاله {% endblock title %}
+    
+{% block content %}
+<div class="text-center">
+<form method="post">
+    {% csrf_token %}
+    <p>آیا می خواهید مقاله "{{ object }}" حذف شود؟</p>
+    <input type="submit" class="btn btn-danger" value="تایید">
+</form>
+</div>
+  
+{% endblock content %}
+    

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} ثبت نام {% endblock title %}
+
+{% block content %}
+<form method="post" novalidate>
+	{% csrf_token %}
+	{{ form.as_p }}
+	<button type="submit" class="btn btn-info">ثبت</button>
+</form>
+{% endblock content %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} ورود {% endblock title %}
+
+{% block content %}
+<form method="post" novalidate>
+	{% csrf_token %}
+	{{ form }}
+	<br>
+	<button type="submit" class="btn btn-info">ورود</button>
+</form>
+<br>
+<a href="{% url 'accounts:sign_up' %}" style="text-decoration: none;"><h5>ایجاد حساب کاربری</h5></a>
+{% endblock content %}
